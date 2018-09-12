@@ -1,0 +1,5 @@
+http://propedit.sourceforge.jp/eclipse/updates/
+
+ 
+通过eclipse中help中的install new software 方式添加对应的插件。
+重新使用插件打开文件

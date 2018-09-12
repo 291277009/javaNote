@@ -1,0 +1,77 @@
+    /**
+     * 向指定 URL 发送delete/put/post/get方法的请求
+     * 
+     * @param url 地址
+     * @param param 传参
+     * @param method //设置请求方式。可以是delete put post get
+     * @return
+     * @throws ConnectException
+     */
+    public static String sendHttp(String url, String param, String method) throws ConnectException {
+        BufferedOutputStream out = null;
+        BufferedReader in = null;
+        String result = "";
+        try {
+            URL httpURL = new URL(url);
+            HttpURLConnection huc = (HttpURLConnection) httpURL.openConnection();
+            //设置请求的方式
+            huc.setRequestMethod(method);
+            // 设置是否从httpUrlConnection读入，默认情况下是true;
+            huc.setDoInput(true);
+            // 设置是否向httpUrlConnection输出，因为这个是post请求，参数要放在
+            // http正文内，因此需要设为true, 默认情况下是false;
+            huc.setDoOutput(true);
+            //这边开始设置请求头
+            huc.setRequestProperty("accept", "*/*");
+            huc.setRequestProperty("connection", "Keep-Alive");
+            huc.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // Post 请求不能使用缓存
+            huc.setUseCaches(false);
+            huc.setConnectTimeout(2000);
+            if("POST".equals(method)){
+                // 设定传送的内容类型是可序列化的java对象(如果不设此项,在传送序列化对象时,当WEB服务默认的不是这种类型时可能抛java.io.EOFException)
+                huc.setRequestProperty("content-type", "application/json;charset=utf-8");
+                //获取URLConnection对象的输出流
+                out = new BufferedOutputStream(huc.getOutputStream());
+                //发送请求的参数
+                out.write(param != null?param.getBytes("UTF-8"):"".getBytes());//参数类型 xx=ss&yy=zz;
+                out.flush();
+                out.close();
+                out = null;
+            }
+
+            // 定义BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(
+                    new InputStreamReader(huc.getInputStream(), "UTF-8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+            	//把响应结果添加到result字符串当中并返回给发送请求对象
+                String str = new String(line.getBytes());
+                result += str;
+            }
+
+        } catch (Exception e) {
+            if (e instanceof ConnectException) {
+                throw new ConnectException("连接超时异常！");
+            } else if (e instanceof SocketTimeoutException) {
+                throw new ConnectException("响应超时异常！");
+            } else {
+                System.out.println("发送 POST 请求出现异常！" + e);
+                e.printStackTrace();
+            }
+        }
+        // 使用finally块来关闭输出流、输入流
+        finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }

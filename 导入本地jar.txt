@@ -1,0 +1,2 @@
+mvn install:install-file -Dfile=sw-certificate-api-1.1.0.jar -DgroupId=com.sowell 
+	-DartifactId=sw-certificate-api -Dversion=1.1.0 -Dpackaging=jar

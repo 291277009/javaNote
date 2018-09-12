@@ -1,0 +1,4 @@
+<!-- Ä¬ÈÏÒ³Ãæ -->
+<welcome-file-list>
+	<welcome-file>welcome.jsp</welcome-file>
+</welcome-file-list>
