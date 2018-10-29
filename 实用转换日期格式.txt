@@ -1,0 +1,9 @@
+定义类  实现  JsonJsonSerializer<Date> 实现其中方法  后期给需要转换的属性添加注解@JsonSerialize(using = Date2LongSerializer.class)
+
+public class Date2LongSerializer extends JsonSerializer<Date> {
+
+    @Override
+    public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+        jsonGenerator.writeNumber(date.getTime() / 1000);
+    }
+}
