@@ -1,0 +1,11 @@
+配置nginx的config
+
+ssh root@虚拟机ip地址
+
+输入密码 ：123456
+修改nginx配置: vim /usr/local/nginx/conf/nginx.conf
+   location /sell/ {
+            proxy_pass http://10.22.128.92:8080/sell/;
+   }
+地址改为本机ip地址
+重启虚拟机  nginx -s reload
