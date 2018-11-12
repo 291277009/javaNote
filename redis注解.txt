@@ -1,0 +1,11 @@
+CacheConfig(cacheNames = "")类注解，加上之后 后面方法前的注解可以不写cacheName属性
+
+Cacheable(cacheNames = "", key="")：写入redis数据库数据
+下面为操作语句 例如数据库查询语句   如果不写key值，则会默认设置入参为key值
+
+CachePut(cacheNames = "", key=""): 修改redis对应key值的value值
+
+CacheEvict(cacheNames = "", key="")：清除该key值的value值
+
+@Cacheable(cacheNames = "", key = "#sellerId", condition = "#sellerId.length() > 3", unless = "#result.getCode() != 0")spel 表达式，可以使用传入的sellerId作为key值
+public ResultVO list(String sellerId){}		condition可以作为条件表达式进行判断    unless刚好不  

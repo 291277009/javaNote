@@ -1,11 +1,30 @@
-配置nginx的config
+1.  配置nginx的config
 
-ssh root@虚拟机ip地址
+	ssh root@虚拟机ip地址
 
-输入密码 ：123456
-修改nginx配置: vim /usr/local/nginx/conf/nginx.conf
-   location /sell/ {
-            proxy_pass http://10.22.128.92:8080/sell/;
-   }
-地址改为本机ip地址
-重启虚拟机  nginx -s reload
+	输入密码 ：123456
+	修改nginx配置: vim /usr/local/nginx/conf/nginx.conf
+	 location /sell/ {
+	     proxy_pass http://10.22.128.92:8080/sell/;
+	 }
+	地址改为本机ip地址
+
+2. 更改域名：
+	server_name  sell.com; 接下来修改本机host  最后一行加上 ： 虚拟机IP地址  sell.com 
+
+	重启虚拟机  nginx -s reload	
+
+
+3.  修改前端代码：http://sck49z.natappfree.cc为代理地址，即natapp端口地址
+
+	进入index.js文件  cd /opt/code/sell_fe_buyer/config
+	vim index.js
+	修改其中路径：
+		sellUrl: 'http://sell.com',
+		openidUrl: 'http://sck49z.natappfree.cc/sell/wechat/authorize',
+		wechatPayUrl: 'http://sck49z.natappfree.cc/sell/pay/create'
+
+	修改完之后重新构建： npm run build
+	cd /opt/sell_fe_buyer
+	复制文件到项目目录下 ：cp -r dist/* /opt/data/wwwroot/sell/
+

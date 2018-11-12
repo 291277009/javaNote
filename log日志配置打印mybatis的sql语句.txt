@@ -1,0 +1,4 @@
+logging:
+	level:
+		mapper文件package路径  ： trace
+		例如：com.imooc.dataobject.mapper：trace

@@ -1,0 +1,23 @@
+克隆文件 
+     git clone 此处为ssh地址
+
+显示本地与线上差异
+     git status
+把文件添加到本地git缓冲区
+     git add .
+     git commit -m '此处为描述'
+把文件上传到git
+     git push
+
+拉下新分支
+git pull
+切换分支
+git checkout master
+使分支合并到主分支
+git merge orgin/分支名称
+提交代码
+git push
+
+显示所有分支
+git branch
+
